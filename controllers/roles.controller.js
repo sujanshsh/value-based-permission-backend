@@ -6,11 +6,9 @@ module.exports = {
             result = await pg.getPool().query("SELECT * FROM roles")
             res.send(result.rows)
         } catch (err) {
-            console.log(res)
             res.status(500).json({
                 message: err.message
             })
-            return
         }
     },
     async createRole(req, res, next) {
@@ -20,11 +18,9 @@ module.exports = {
                 [req.body.name, req.body.description])
             res.send(result.rows)
         } catch (err) {
-            console.log(res)
             res.status(500).json({
                 message: err.message
             })
-            return
         }
     },
     async updateRole(req, res, next) {
@@ -34,11 +30,9 @@ module.exports = {
                 [req.body.name, req.body.description, req.params.id])
             res.send(result.rows)
         } catch (err) {
-            console.log(res)
             res.status(500).json({
                 message: err.message
             })
-            return
         }
     },
     async deleteRole(req, res, next) {
@@ -48,11 +42,9 @@ module.exports = {
                 [req.params.id])
             res.send(result.rows)
         } catch (err) {
-            console.log(res)
             res.status(500).json({
                 message: err.message
             })
-            return
         }
     }
 }
