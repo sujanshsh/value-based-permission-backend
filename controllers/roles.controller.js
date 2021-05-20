@@ -1,4 +1,4 @@
-const pg = require('../services/pgService')
+import pg from '../services/pgService'
 
 module.exports = {
     async getRoles(req, res, next) {

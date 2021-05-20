@@ -1,6 +1,6 @@
-const express = require('express')
-const cors = require('cors')
-const rolesController = require('./controllers/roles.controller')
+import express from 'express'
+import cors from 'cors'
+import rolesController from './controllers/roles.controller'
 
 const app = express()
 const port = 3000

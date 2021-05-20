@@ -1,5 +1,5 @@
-const pg = require('../services/pgService')
-const crypto = require('crypto')
+import pg from '../services/pgService'
+import crypto from 'crypto'
 
 module.exports = {
     async getUsers(req, res, next) {
