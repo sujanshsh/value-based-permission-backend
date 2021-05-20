@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
-import rolesRouter from './routes/roles'
-import usersRouter from './routes/users'
+import rolesRouter from './routes/roles.js'
+import usersRouter from './routes/users.js'
 
 const app = express()
 const port = 3000

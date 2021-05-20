@@ -1,5 +1,6 @@
 
-import { Pool } from 'pg'
+import pg_pkg from 'pg'
+const { Pool } = pg_pkg
 
 const pool = new Pool({
   user: 'accesscontrol',
@@ -9,8 +10,8 @@ const pool = new Pool({
   port: 5432,
 })
 
-module.exports = {
-    getPool() {
-        return pool
-    }
+const getPool = () => {
+    return pool
 }
+
+export default getPool
