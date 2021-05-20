@@ -24,6 +24,7 @@ exports.up = pgm => {
         id: 'id',
         name: { type: 'varchar(64)', notNull: true },
         description: { type: 'varchar(256)', notNull: true },
+        url: { type: 'varchar(512)', notNull: true },
         createdAt: {
             type: 'timestamp',
             notNull: true,
