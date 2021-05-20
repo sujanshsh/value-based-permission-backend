@@ -13,7 +13,7 @@ export default class UserRolesController {
         }
     }
 
-    static async createUserRoles(req, res, next) {
+    static async createUserRole(req, res, next) {
         try {
             const result = await getPool().query(
                 "INSERT INTO user_roles(user_id, role_id) VALUES ($1, $2, $3) RETURNING *",
@@ -26,7 +26,7 @@ export default class UserRolesController {
         }
     }
 
-    static async updateUserRoles(req, res, next) {
+    static async updateUserRole(req, res, next) {
         try {
             const result = await getPool().query(
                 "UPDATE user_roles SET user_id = $1, role_id = $2 WHERE ID = $3 RETURNING *",
@@ -39,7 +39,7 @@ export default class UserRolesController {
         }
     }
 
-    static async deleteUserRoles(req, res, next) {
+    static async deleteUserRole(req, res, next) {
         try {
             const result = await getPool().query(
                 "DELETE FROM user_roles WHERE ID = $1 RETURNING *",

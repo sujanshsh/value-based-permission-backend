@@ -12,7 +12,7 @@ export default class ValueTypesController {
         }
     }
 
-    static async createValueTypes(req, res, next) {
+    static async createValueType(req, res, next) {
         try {
             const result = await getPool().query(
                 "INSERT INTO value_types(name, description, url) VALUES ($1, $2, $3) RETURNING *",
@@ -25,7 +25,7 @@ export default class ValueTypesController {
         }
     }
 
-    static async updateValueTypes(req, res, next) {
+    static async updateValueType(req, res, next) {
         try {
             const result = await getPool().query(
                 "UPDATE value_types SET name = $1, description = $2, url = $3 WHERE ID = $4 RETURNING *",
@@ -38,7 +38,7 @@ export default class ValueTypesController {
         }
     }
 
-    static async deleteValueTypes(req, res, next) {
+    static async deleteValueType(req, res, next) {
         try {
             const result = await getPool().query(
                 "DELETE FROM value_types WHERE ID = $1 RETURNING *",
