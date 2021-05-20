@@ -2,6 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import rolesRouter from './routes/roles.js'
 import usersRouter from './routes/users.js'
+import permissionsRouter from './routes/permissions.js'
+import rolePermissionsRouter from './routes/role_permissions.js'
+import userRolesRouter from './routes/user_roles.js'
+import valueTypesRouter from './routes/value_types.js'
 
 const app = express()
 const port = 3000
@@ -17,6 +21,10 @@ app.get('/', (req, res) => {
 
 app.use(rolesRouter)
 app.use(usersRouter)
+app.use(permissionsRouter)
+app.use(rolePermissionsRouter)
+app.use(userRolesRouter)
+app.use(valueTypesRouter)
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
