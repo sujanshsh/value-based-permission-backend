@@ -1,0 +1,27 @@
+{
+  "name": "access-control-admin-backend",
+  "version": "1.0.0",
+  "description": "Backend for Access Control Admin",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node-pg-migrate",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "access-control"
+  ],
+  "author": "Sujan Shakya",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-pg-migrate": "^5.9.0",
+    "pg": "^8.6.0",
+    "postgres-migrations": "^5.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
