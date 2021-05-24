@@ -3,7 +3,24 @@ import getPool from '../services/pgService.js'
 export default class RolesController {
     static async getRoles(req, res, next) {
         try {
-            const result = await getPool().query("SELECT * FROM roles")
+            let whereClause = ''
+            let whereCondition = ''
+            let index = 0
+            let bindVars = []
+            if (req.query.name) {
+                index++
+                whereCondition += `name = $${index}`
+                bindVars.push(req.query.name)
+            }
+            if (req.query.description) {
+                index++
+                whereCondition += `description = $${index}`
+                bindVars.push(req.query.description)
+            }
+            if (whereCondition) {
+                whereClause = `WHERE ${whereCondition}`
+            }
+            const result = await getPool().query(`SELECT * FROM roles ${whereClause}`, bindVars)
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
