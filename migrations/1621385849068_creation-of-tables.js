@@ -90,7 +90,7 @@ exports.up = pgm => {
             default: pgm.func('current_timestamp'),
         }
     })
-    pgm.createIndex('users', 'email')
+    pgm.createIndex('users', 'email', {unique: true})
 
     pgm.createTable('user_roles', {
         id: 'id',
