@@ -51,8 +51,8 @@ export default class UsersController {
             }
             if (req.query.name) {
                 index++
-                whereConditions.push(`name LIKE $${index}`)
-                bindVars.push(req.query.name + '%')
+                whereConditions.push(`LOWER(name) LIKE $${index}`)
+                bindVars.push(req.query.name.toLowerCase() + '%')
             }
             if (req.query.password) {
                 index++

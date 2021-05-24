@@ -37,13 +37,13 @@ export default class RolesController {
             let bindVars = []
             if (req.query.name) {
                 index++
-                whereConditions.push(`name LIKE $${index}`)
-                bindVars.push(req.query.name + '%')
+                whereConditions.push(`LOWER(name) LIKE $${index}`)
+                bindVars.push(req.query.name.toLowerCase() + '%')
             }
             if (req.query.description) {
                 index++
-                whereConditions.push(`description LIKE $${index}`)
-                bindVars.push(req.query.description + '%')
+                whereConditions.push(`LOWER(description) LIKE $${index}`)
+                bindVars.push(req.query.description.toLowerCase() + '%')
             }
             if (whereConditions.length > 0) {
                 whereClause = 'WHERE ' + whereConditions.join(' OR ')
