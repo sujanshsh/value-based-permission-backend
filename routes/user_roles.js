@@ -8,5 +8,6 @@ userRolesRouter.get('/user-roles', UserRolesController.getUserRoles)
 userRolesRouter.post('/user-roles', UserRolesController.createUserRole)
 userRolesRouter.put('/user-roles/:id', UserRolesController.updateUserRole)
 userRolesRouter.delete('/user-roles/:id', UserRolesController.deleteUserRole)
+userRolesRouter.delete('/users/:id/roles', UserRolesController.rolesOfUser)
 
 export default userRolesRouter
