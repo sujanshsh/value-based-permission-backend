@@ -37,6 +37,41 @@ export default class UsersController {
         }
     }
 
+    static async getUsersLike(req, res, next) {
+        try {
+            let whereClause = ''
+            let whereConditions = []
+            let index = 0
+            let passwordHash = ''
+            let bindVars = []
+            if (req.query.email) {
+                index++
+                whereConditions.push(`email LIKE $${index}`)
+                bindVars.push(req.query.email + '%')
+            }
+            if (req.query.name) {
+                index++
+                whereConditions.push(`name LIKE $${index}`)
+                bindVars.push(req.query.name + '%')
+            }
+            if (req.query.password) {
+                index++
+                passwordHash = crypto.createHash('sha256').update(req.query.password).digest('hex');
+                whereConditions.push(`"passwordHash" LIKE $${index}`)
+                bindVars.push(passwordHash + '%')
+            }
+            if (whereConditions.length > 0) {
+                whereClause = 'WHERE ' + whereConditions.join(' OR ')
+            }
+            const result = await getPool().query(`SELECT * FROM users ${whereClause}`, bindVars)
+            res.send(result.rows)
+        } catch (err) {
+            res.status(500).json({
+                message: err.message
+            })
+        }
+    }
+
     static async createUser(req, res, next) {
         try {
             const passwordHash = crypto.createHash('sha256').update(req.body.password).digest('hex');
