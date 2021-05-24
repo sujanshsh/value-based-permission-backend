@@ -22,7 +22,7 @@ export default class UsersController {
             if (req.query.password) {
                 index++
                 passwordHash = crypto.createHash('sha256').update(req.query.password).digest('hex');
-                whereConditions.push(`passwordHash = $${index}`)
+                whereConditions.push(`"passwordHash" = $${index}`)
                 bindVars.push(passwordHash)
             }
             if (whereConditions.length > 0) {
@@ -90,7 +90,7 @@ export default class UsersController {
         try {
             const passwordHash = crypto.createHash('sha256').update(req.body.password).digest('hex');
             const result = await getPool().query(
-                "UPDATE users SET email = $1, name = $2, passwordHash = $3 WHERE ID = $4 RETURNING *",
+                `UPDATE users SET email = $1, name = $2, "passwordHash" = $3 WHERE ID = $4 RETURNING *`,
                 [req.body.email, req.body.name, passwordHash, req.params.id])
             res.send(result.rows)
         } catch (err) {
