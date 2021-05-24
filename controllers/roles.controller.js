@@ -29,6 +29,34 @@ export default class RolesController {
         }
     }
 
+    static async getRolesLike(req, res, next) {
+        try {
+            let whereClause = ''
+            let whereConditions = []
+            let index = 0
+            let bindVars = []
+            if (req.query.name) {
+                index++
+                whereConditions.push(`name LIKE $${index}`)
+                bindVars.push(req.query.name + '%')
+            }
+            if (req.query.description) {
+                index++
+                whereConditions.push(`description LIKE $${index}`)
+                bindVars.push(req.query.description + '%')
+            }
+            if (whereConditions.length > 0) {
+                whereClause = 'WHERE ' + whereConditions.join(' OR ')
+            }
+            const result = await getPool().query(`SELECT * FROM roles ${whereClause}`, bindVars)
+            res.send(result.rows)
+        } catch (err) {
+            res.status(500).json({
+                message: err.message
+            })
+        }
+    }
+
     static async createRole(req, res, next) {
         try {
             const result = await getPool().query(
