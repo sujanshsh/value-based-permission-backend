@@ -5,28 +5,28 @@ export default class UsersController {
     static async getUsers(req, res, next) {
         try {
             let whereClause = ''
-            let whereCondition = ''
+            let whereConditions = []
             let index = 0
             let passwordHash = ''
             let bindVars = []
             if (req.query.email) {
                 index++
-                whereCondition += `email = $${index}`
+                whereConditions.push(`email = $${index}`)
                 bindVars.push(req.query.email)
             }
             if (req.query.name) {
                 index++
-                whereCondition += `name = $${index}`
+                whereConditions.push(`name = $${index}`)
                 bindVars.push(req.query.name)
             }
             if (req.query.password) {
                 index++
                 passwordHash = crypto.createHash('sha256').update(req.query.password).digest('hex');
-                whereCondition += `passwordHash = $${index}`
+                whereConditions.push(`passwordHash = $${index}`)
                 bindVars.push(passwordHash)
             }
-            if (whereCondition) {
-                whereClause = `WHERE ${whereCondition}`
+            if (whereConditions.length > 0) {
+                whereClause = 'WHERE ' + whereConditions.join(' AND ')
             }
             const result = await getPool().query(`SELECT * FROM users ${whereClause}`, bindVars)
             res.send(result.rows)

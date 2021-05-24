@@ -4,21 +4,21 @@ export default class RolesController {
     static async getRoles(req, res, next) {
         try {
             let whereClause = ''
-            let whereCondition = ''
+            let whereConditions = []
             let index = 0
             let bindVars = []
             if (req.query.name) {
                 index++
-                whereCondition += `name = $${index}`
+                whereConditions.push(`name = $${index}`)
                 bindVars.push(req.query.name)
             }
             if (req.query.description) {
                 index++
-                whereCondition += `description = $${index}`
+                whereConditions.push(`description = $${index}`)
                 bindVars.push(req.query.description)
             }
-            if (whereCondition) {
-                whereClause = `WHERE ${whereCondition}`
+            if (whereConditions.length > 0) {
+                whereClause = 'WHERE ' + whereConditions.join(' AND ')
             }
             const result = await getPool().query(`SELECT * FROM roles ${whereClause}`, bindVars)
             res.send(result.rows)
