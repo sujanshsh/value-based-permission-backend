@@ -56,7 +56,8 @@ export default class UserRolesController {
         try {
             const result = await getPool().query(
                 `SELECT
-                    r.*
+                    r.*,
+                    ur.id user_roles_id
                 FROM user_roles ur INNER JOIN roles r ON (ur.role_id = r.id) 
                 WHERE ur.user_id = $1`,
                 [req.params.id])

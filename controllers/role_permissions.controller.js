@@ -55,7 +55,8 @@ export default class RolePermissionsController {
         try {
             const result = await getPool().query(
                 `SELECT 
-                    p.* 
+                    p.*,
+                    rp.id role_permissions_id 
                 FROM role_permissions rp
                     INNER JOIN permissions p ON (rp.permission_id = p.id)
                   WHERE 
