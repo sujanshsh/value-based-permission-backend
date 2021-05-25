@@ -16,8 +16,8 @@ export default class UserRolesController {
     static async createUserRole(req, res, next) {
         try {
             const result = await getPool().query(
-                "INSERT INTO user_roles(user_id, role_id) VALUES ($1, $2, $3) RETURNING *",
-                [req.body.user_id, req.body.role_id, passwordHash])
+                "INSERT INTO user_roles(user_id, role_id) VALUES ($1, $2) RETURNING *",
+                [req.body.user_id, req.body.role_id])
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
