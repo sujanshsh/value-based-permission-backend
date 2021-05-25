@@ -58,7 +58,7 @@ export default class UserRolesController {
                 `SELECT
                     r.*
                 FROM user_roles ur INNER JOIN roles r ON (ur.role_id = r.id) 
-                WHERE ur.user_id = $1 RETURNING *`,
+                WHERE ur.user_id = $1`,
                 [req.params.id])
             res.send(result.rows)
         } catch (err) {

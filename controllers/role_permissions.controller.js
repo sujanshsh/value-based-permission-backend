@@ -58,7 +58,9 @@ export default class RolePermissionsController {
                     p.* 
                 FROM role_permissions rp
                     INNER JOIN permissions p ON (rp.permission_id = p.id)
-                  WHERE rp.role_id = $1 RETURNING *`,
+                  WHERE 
+                  rp.role_id = $1
+                   `,
                 [req.params.id])
             res.send(result.rows)
         } catch (err) {
