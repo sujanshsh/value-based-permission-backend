@@ -80,8 +80,8 @@ export default class PermissionsController {
     static async createPermission(req, res, next) {
         try {
             const result = await getPool().query(
-                "INSERT INTO permissions(name, description, values) VALUES ($1, $2, $3) RETURNING *",
-                [req.body.name, req.body.description, req.body.values])
+                "INSERT INTO permissions(name, description, suffix, value_type_id, values) VALUES ($1, $2, $3) RETURNING *",
+                [req.body.name, req.body.description, req.body.suffix || '', req.body.value_type_id || '', req.body.values])
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
