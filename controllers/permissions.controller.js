@@ -9,28 +9,33 @@ export default class PermissionsController {
             let bindVars = []
             if (req.query.name) {
                 index++
-                whereConditions.push(`name = $${index}`)
+                whereConditions.push(`p.name = $${index}`)
                 bindVars.push(req.query.name)
             }
             if (req.query.description) {
                 index++
-                whereConditions.push(`description = $${index}`)
+                whereConditions.push(`p.description = $${index}`)
                 bindVars.push(req.query.description)
             }
             if (req.query.suffix) {
                 index++
-                whereConditions.push(`suffix = $${index}`)
+                whereConditions.push(`p.suffix = $${index}`)
                 bindVars.push(req.query.suffix)
             }
             if (req.query.values) {
                 index++
-                whereConditions.push(`values = $${index}`)
+                whereConditions.push(`p.values = $${index}`)
                 bindVars.push(req.query.values)
             }
             if (whereConditions.length > 0) {
                 whereClause = 'WHERE ' + whereConditions.join(' AND ')
             }
-            const result = await getPool().query(`SELECT * FROM permissions ${whereClause}`, bindVars)
+            const result = await getPool().query(
+                `SELECT p.*, vt.name value_type_name
+                FROM permissions p LEFT JOIN valut_types vt ON (p.value_type_id = vt.id)
+                ${whereClause}`,
+                bindVars
+            )
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
@@ -47,28 +52,33 @@ export default class PermissionsController {
             let bindVars = []
             if (req.query.name) {
                 index++
-                whereConditions.push(`LOWER(name) LIKE $${index}`)
+                whereConditions.push(`LOWER(p.name) LIKE $${index}`)
                 bindVars.push(req.query.name.toLowerCase() + '%')
             }
             if (req.query.description) {
                 index++
-                whereConditions.push(`LOWER(description) LIKE $${index}`)
+                whereConditions.push(`LOWER(p.description) LIKE $${index}`)
                 bindVars.push(req.query.description.toLowerCase() + '%')
             }
             if (req.query.suffix) {
                 index++
-                whereConditions.push(`suffix LIKE $${index}`)
+                whereConditions.push(`LOWER(p.suffix) LIKE $${index}`)
                 bindVars.push(req.query.suffix.toLowerCase() + '%')
             }
             if (req.query.values) {
                 index++
-                whereConditions.push(`LOWER(values) LIKE $${index}`)
+                whereConditions.push(`LOWER(p.values) LIKE $${index}`)
                 bindVars.push(req.query.values.toLowerCase() + '%')
             }
             if (whereConditions.length > 0) {
                 whereClause = 'WHERE ' + whereConditions.join(' OR ')
             }
-            const result = await getPool().query(`SELECT * FROM permissions ${whereClause}`, bindVars)
+            const result = await getPool().query(
+                `SELECT p.*, vt.name
+                FROM permissions p LEFT JOIN valut_types vt ON (p.value_type_id = vt.id)
+                ${whereClause}`,
+                bindVars
+            )
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
