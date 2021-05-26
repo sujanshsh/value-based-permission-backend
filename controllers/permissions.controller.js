@@ -17,6 +17,11 @@ export default class PermissionsController {
                 whereConditions.push(`description = $${index}`)
                 bindVars.push(req.query.description)
             }
+            if (req.query.suffix) {
+                index++
+                whereConditions.push(`suffix = $${index}`)
+                bindVars.push(req.query.suffix)
+            }
             if (req.query.values) {
                 index++
                 whereConditions.push(`values = $${index}`)
@@ -49,6 +54,11 @@ export default class PermissionsController {
                 index++
                 whereConditions.push(`LOWER(description) LIKE $${index}`)
                 bindVars.push(req.query.description.toLowerCase() + '%')
+            }
+            if (req.query.suffix) {
+                index++
+                whereConditions.push(`suffix LIKE $${index}`)
+                bindVars.push(req.query.suffix.toLowerCase() + '%')
             }
             if (req.query.values) {
                 index++
