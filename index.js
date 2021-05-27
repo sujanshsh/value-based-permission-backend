@@ -28,6 +28,32 @@ app.use(userRolesRouter)
 app.use(valueTypesRouter)
 app.use(sampleValuesRouter)
 
+app.get('/access-control-users', (req, res) => {
+  res.json([
+    {
+        "id": 1,
+        "username": "shakya.sujan",
+        "name": "Sujan Shakya",
+        "role": "SuperAdmin",
+        "password": "abcd"
+    },
+    {
+        "id": 2,
+        "username": "super.admin",
+        "name": "Super Admin #2",
+        "role": "SuperAdmin",
+        "password": "abcd"
+    },
+    {
+        "id": 2,
+        "username": "admin",
+        "name": "Admin #3",
+        "role": "Admin",
+        "password": "abcd"
+    }
+  ])
+})
+
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })

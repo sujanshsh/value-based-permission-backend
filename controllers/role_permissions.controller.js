@@ -50,4 +50,24 @@ export default class RolePermissionsController {
             })
         }
     }
+
+    static async permissionsOfRole(req, res, next) {
+        try {
+            const result = await getPool().query(
+                `SELECT 
+                    p.*,
+                    rp.id role_permissions_id 
+                FROM role_permissions rp
+                    INNER JOIN permissions p ON (rp.permission_id = p.id)
+                  WHERE 
+                  rp.role_id = $1
+                   `,
+                [req.params.id])
+            res.send(result.rows)
+        } catch (err) {
+            res.status(500).json({
+                message: err.message
+            })
+        }
+    }
 }

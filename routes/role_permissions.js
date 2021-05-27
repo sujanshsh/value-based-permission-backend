@@ -8,5 +8,6 @@ rolePermissionsRouter.get('/role-permissions', RolePermissionsController.getRole
 rolePermissionsRouter.post('/role-permissions', RolePermissionsController.createRolePermission)
 rolePermissionsRouter.put('/role-permissions/:id', RolePermissionsController.updateRolePermission)
 rolePermissionsRouter.delete('/role-permissions/:id', RolePermissionsController.deleteRolePermission)
+rolePermissionsRouter.get('/roles/:id/permissions', RolePermissionsController.permissionsOfRole)
 
 export default rolePermissionsRouter

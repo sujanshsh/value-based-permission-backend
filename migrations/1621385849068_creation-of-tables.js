@@ -40,8 +40,10 @@ exports.up = pgm => {
 
     pgm.createTable('permissions', {
         id: 'id',
-        name: { type: 'varchar(64)', notNull: true },
+        name: { type: 'varchar(256)', notNull: true },
+        suffix: { type: 'varchar(128)', notNull: false },
         description: { type: 'varchar(256)', notNull: true },
+        value_type_id: { type: 'int', notNull: false, references: 'value_types' },
         values: { type: 'varchar(1024)', notNull: false },
         createdAt: {
             type: 'timestamp',
@@ -54,7 +56,7 @@ exports.up = pgm => {
             default: pgm.func('current_timestamp'),
         }
     })
-    pgm.createIndex('permissions', 'name', {unique: true})
+    pgm.createIndex('permissions', ['name', 'suffix'], {unique: true})
 
     pgm.createTable('role_permissions', {
         id: 'id',
@@ -90,7 +92,7 @@ exports.up = pgm => {
             default: pgm.func('current_timestamp'),
         }
     })
-    pgm.createIndex('users', 'email')
+    pgm.createIndex('users', 'email', {unique: true})
 
     pgm.createTable('user_roles', {
         id: 'id',
