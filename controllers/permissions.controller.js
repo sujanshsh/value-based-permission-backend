@@ -91,7 +91,7 @@ export default class PermissionsController {
         try {
             const result = await getPool().query(
                 "INSERT INTO permissions(name, description, suffix, value_type_id, values) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-                [req.body.name, req.body.description, req.body.suffix || '', req.body.value_type_id || '', req.body.values])
+                [req.body.name, req.body.description, req.body.suffix || '', parseInt(req.body.value_type_id) || null, req.body.values])
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
@@ -103,8 +103,9 @@ export default class PermissionsController {
     static async updatePermission(req, res, next) {
         try {
             const result = await getPool().query(
-                "UPDATE permissions SET name = $1, description = $2, values = $3 WHERE ID = $4 RETURNING *",
-                [req.body.name, req.body.description, req.body.values, req.params.id])
+                "UPDATE permissions SET name = $1, suffix = $2, description = $3, value_type_id = $4, values = $5 WHERE ID = $6 RETURNING *",
+                [req.body.name, req.body.suffix || '', req.body.description, req.body.value_type_id || null, 
+                    req.body.values, req.params.id])
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
