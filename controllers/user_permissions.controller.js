@@ -4,6 +4,18 @@ export default class UserPermissionsController {
 
     static async permissionsOfUser(req, res, next) {
         try {
+
+            let extraWhereConditions = ''
+            let whereConditions = []
+            let index = 1
+            let bindVars = [req.params.id]
+            if (req.query.permission_ids) {
+                whereConditions.push(`p.id IN (${req.query.permission_ids})`)
+            }
+            if (whereConditions.length > 0) {
+                extraWhereConditions = 'AND ' + whereConditions.join(' AND ')
+            }
+
             const result = await getPool().query(
                 `SELECT 
                     p.*,
@@ -17,8 +29,9 @@ export default class UserPermissionsController {
                     LEFT JOIN value_types vt ON (vt.id = p.value_type_id)
                 WHERE 
                     ur.user_id = $1
+                    ${extraWhereConditions}
                    `,
-                [req.params.id])
+                bindVars)
             res.send(result.rows)
         } catch (err) {
             res.status(500).json({
