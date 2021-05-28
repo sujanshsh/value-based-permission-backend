@@ -74,7 +74,7 @@ export default class PermissionsController {
                 whereClause = 'WHERE ' + whereConditions.join(' OR ')
             }
             const result = await getPool().query(
-                `SELECT p.*, vt.name
+                `SELECT p.*, vt.name value_type_name
                 FROM permissions p LEFT JOIN value_types vt ON (p.value_type_id = vt.id)
                 ${whereClause}`,
                 bindVars
