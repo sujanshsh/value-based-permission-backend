@@ -53,28 +53,28 @@ export default class PermissionsController {
             if (req.query.name) {
                 index++
                 whereConditions.push(`LOWER(p.name) LIKE $${index}`)
-                bindVars.push(req.query.name.toLowerCase() + '%')
+                bindVars.push('%' + req.query.name.toLowerCase() + '%')
             }
             if (req.query.description) {
                 index++
                 whereConditions.push(`LOWER(p.description) LIKE $${index}`)
-                bindVars.push(req.query.description.toLowerCase() + '%')
+                bindVars.push('%' + req.query.description.toLowerCase() + '%')
             }
             if (req.query.suffix) {
                 index++
                 whereConditions.push(`LOWER(p.suffix) LIKE $${index}`)
-                bindVars.push(req.query.suffix.toLowerCase() + '%')
+                bindVars.push('%' + req.query.suffix.toLowerCase() + '%')
             }
             if (req.query.values) {
                 index++
                 whereConditions.push(`LOWER(p.values) LIKE $${index}`)
-                bindVars.push(req.query.values.toLowerCase() + '%')
+                bindVars.push('%' + req.query.values.toLowerCase() + '%')
             }
             if (whereConditions.length > 0) {
                 whereClause = 'WHERE ' + whereConditions.join(' OR ')
             }
             const result = await getPool().query(
-                `SELECT p.*, vt.name
+                `SELECT p.*, vt.name value_type_name
                 FROM permissions p LEFT JOIN value_types vt ON (p.value_type_id = vt.id)
                 ${whereClause}`,
                 bindVars

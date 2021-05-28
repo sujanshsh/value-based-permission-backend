@@ -47,12 +47,12 @@ export default class UsersController {
             if (req.query.email) {
                 index++
                 whereConditions.push(`email LIKE $${index}`)
-                bindVars.push(req.query.email + '%')
+                bindVars.push('%' + req.query.email + '%')
             }
             if (req.query.name) {
                 index++
                 whereConditions.push(`LOWER(name) LIKE $${index}`)
-                bindVars.push(req.query.name.toLowerCase() + '%')
+                bindVars.push('%' + req.query.name.toLowerCase() + '%')
             }
             if (req.query.password) {
                 index++
