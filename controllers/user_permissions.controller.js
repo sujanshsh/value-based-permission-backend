@@ -12,8 +12,12 @@ export default class UserPermissionsController {
             if (req.query.permission_ids) {
                 whereConditions.push(`p.id IN (${req.query.permission_ids})`)
             }
+            if (req.query.permission_names) {
+                let permissionsList = "'" + req.query.permission_names.split(',').join("','") + "'"
+                whereConditions.push(`p.name IN (${permissionsList})`)
+            }
             if (whereConditions.length > 0) {
-                extraWhereConditions = 'AND ' + whereConditions.join(' AND ')
+                extraWhereConditions = 'OR ' + whereConditions.join(' AND ')
             }
 
             const result = await getPool().query(
